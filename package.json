@@ -1,0 +1,22 @@
+{
+  "name": "minecraft-bot-manager",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "minecraft-protocol": "^1.44.0",
+    "mineflayer": "^4.14.0",
+    "mineflayer-item-map-downloader": "^1.3.0",
+    "mineflayer-pathfinder": "^2.4.5",
+    "prismarine-chat": "^1.9.1",
+    "sharp": "^0.33.5",
+    "ws": "^8.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

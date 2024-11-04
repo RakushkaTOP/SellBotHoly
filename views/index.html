@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Minecraft Bot Manager</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #141E30 0%, #243B55 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            font-family: 'Segoe UI', sans-serif;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        #main-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script>
+        // Удаляем обработчик из head
+        // window.addEventListener('load', () => {
+        //     const ws = new WebSocket(`ws://${window.location.host}`);
+        //     ws.onopen = () => {
+        //         hideLoadingScreen();
+        //     };
+        //     ws.onerror = () => {
+        //         document.querySelector('.loading-text').textContent = 'Ошибка подключения к серверу...';
+        //     };
+        // });
+    </script>
+</head>
+<body>
+    <!-- Экран загрузки -->
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">Загрузка...</div>
+    </div>
+
+    <!-- Основной контент (оберните существующий контент) -->
+    <div id="main-content">
+        <div class="container">
+            <div class="header">
+                <div class="title-section">
+                    <h1>Minecraft Bot Manager</h1>
+                    <span class="subtitle">Управление торговыми ботами</span>
+                </div>
+                <div class="controls">
+                    <button id="startBot" class="btn btn-success">
+                        <i class="material-icons">play_arrow</i>
+                        <span>Старт</span>
+                    </button>
+                    <button id="stopBot" class="btn btn-danger">
+                        <i class="material-icons">stop</i>
+                        <span>Стоп</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Добавить после header, перед tables-container -->
+            <div class="receiver-section">
+                <div class="receiver-container">
+                    <label for="receiverNickname">Никнейм получателя монет:</label>
+                    <input type="text" id="receiverNickname" placeholder="MrVupsin">
+                    <div class="receiver-note">*монетки будут приходить на этот никнейм*</div>
+                </div>
+            </div>
+
+            <div class="tables-container">
+                <div class="table-section">
+                    <div class="section-header">
+                        <h2>Боты</h2>
+                        <button id="addBot" class="btn btn-add">
+                            <i class="material-icons">person_add</i>
+                            <span>Добавить бота</span>
+                        </button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="botsTable">
+                            <thead>
+                                <tr>
+                                    <th>Никнейм</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="table-section">
+                    <div class="section-header">
+                        <h2>Предметы</h2>
+                        <button id="addItem" class="btn btn-add">
+                            <i class="material-icons">add_box</i>
+                            <span>Добавить предмет</span>
+                        </button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="itemsTable">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Количество</th>
+                                    <th>Цена</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terminal-section">
+                <div class="terminal-header">
+                    <h2>Терминал</h2>
+                    <button id="clearTerminal" class="btn btn-action">
+                        <i class="material-icons">clear_all</i>
+                        <span>Сбросить</span>
+                    </button>
+                </div>
+                <div class="terminal">
+                    <div id="terminalOutput"></div>
+                </div>
+            </div>
+
+            <div class="command-section">
+                <div class="command-header">
+                    <h2>Ввод команд</h2>
+                </div>
+                <div class="command-input-container">
+                    <input type="text" id="commandInput" class="command-input" placeholder="Введите команду...">
+                    <button id="sendCommand" class="btn btn-send">
+                        <i class="material-icons">send</i>
+                        <span>Отправить</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./renderer.js"></script>
+</body>
+</html> 
