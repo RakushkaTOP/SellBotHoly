@@ -1,4 +1,4 @@
 /node_modules
-/config.json
+config/config.json
 /captha_maps
 package-lock.json
