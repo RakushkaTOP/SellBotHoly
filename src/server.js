@@ -102,7 +102,7 @@ wss.on('connection', (ws) => {
                         });
 
                         broadcastBotStatus('started');
-                        broadcastLog('Боты запущены', 'success');
+                        // broadcastLog('Боты запущены', 'success');
                     } catch (error) {
                         console.error('Error starting bot:', error);
                         broadcastBotStatus('error');
@@ -116,7 +116,7 @@ wss.on('connection', (ws) => {
                     botProcess.kill();
                     botProcess = null;
                     broadcastBotStatus('stopped');
-                    broadcastLog('Боты остановлены', 'warning');
+                    // broadcastLog('Боты остановлены', 'warning');
                 }
                 break;
 
@@ -133,9 +133,19 @@ wss.on('connection', (ws) => {
 
             case 'chat-message':
                 if (botProcess) {
+                    // Отправляем сообщение только один раз
                     botProcess.send({ 
                         type: 'chat-message', 
                         message: data.message 
+                    });
+                }
+                break;
+
+            case 'captcha-answer':
+                if (botProcess) {
+                    botProcess.send({ 
+                        type: 'captcha-answer', 
+                        answer: data.answer 
                     });
                 }
                 break;
@@ -148,6 +158,16 @@ wss.on('connection', (ws) => {
 });
 
 function broadcastLog(message, type) {
+    // Проверяем, не является ли сообщение дублирующим
+    if (message === 'Боты запущены' || message === 'Боты остановлены') {
+        // Проверяем, не отправляли ли мы это сообщение недавно
+        const now = Date.now();
+        if (lastBroadcastTime && now - lastBroadcastTime < 1000) {
+            return; // Пропускаем дублирующее сообщение
+        }
+        lastBroadcastTime = now;
+    }
+
     wss.clients.forEach(client => {
         if (client.readyState === WebSocket.OPEN) {
             client.send(JSON.stringify({
@@ -157,6 +177,9 @@ function broadcastLog(message, type) {
         }
     });
 }
+
+// Добавляем переменную для отслеживания времени последней отправки
+let lastBroadcastTime = 0;
 
 // Добавляем новые роуты для работы с конфигурацией
 app.get('/api/config', (req, res) => {

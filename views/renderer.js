@@ -71,9 +71,42 @@ const terminal = {
             <span class="timestamp">[${timestamp}]</span>
             <div class="captcha-message">Получена капча:</div>
             <img src="data:image/png;base64,${imageBase64}" class="captcha-image">
+            <div class="captcha-input-container">
+                <input type="text" class="captcha-input" placeholder="Введите ответ на капчу">
+                <button class="captcha-submit">Отправить</button>
+            </div>
         `;
         
         this.output.appendChild(msgElement);
+        
+        const captchaInput = msgElement.querySelector('.captcha-input');
+        const submitButton = msgElement.querySelector('.captcha-submit');
+        
+        const submitCaptcha = () => {
+            const answer = captchaInput.value.trim();
+            if (answer) {
+                if (ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({
+                        type: 'captcha-answer',
+                        answer: answer
+                    }));
+                    this.log(`Отправлен ответ на капчу: ${answer}`, 'info');
+                }
+                captchaInput.disabled = true;
+                submitButton.disabled = true;
+            }
+        };
+
+        captchaInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitCaptcha();
+            }
+        });
+
+        submitButton.addEventListener('click', submitCaptcha);
+        
+        captchaInput.focus();
+        
         this.output.parentElement.scrollTop = this.output.parentElement.scrollHeight;
     }
 };
@@ -86,7 +119,7 @@ const configManager = {
             if (typeof updateUIFromConfig === 'function') {
                 updateUIFromConfig(config);
             }
-            terminal.log('Конфигурация загружена', 'success');
+            // terminal.log('Конфигурация загружена', 'success');
         } catch (error) {
             terminal.log('Ошибка загрузки конфигурации', 'error');
         }

@@ -165,7 +165,7 @@ ipcMain.on('start-bot', (event) => {
             });
 
             event.reply('bot-status', 'started');
-            mainWindow.webContents.send('bot-log', 'Боты запущены', 'success');
+            // mainWindow.webContents.send('bot-log', 'Боты запущены', 'success');
         } catch (error) {
             console.error('Error starting bot:', error);
             event.reply('bot-status', 'error');
@@ -180,7 +180,7 @@ ipcMain.on('stop-bot', (event) => {
         botProcess.kill();
         botProcess = null;
         event.reply('bot-status', 'stopped');
-        mainWindow.webContents.send('bot-log', 'Боты остановлены', 'warning');
+        // mainWindow.webContents.send('bot-log', 'Боты остановлены', 'warning');
     }
 });
   

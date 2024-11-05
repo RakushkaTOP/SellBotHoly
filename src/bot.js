@@ -19,8 +19,53 @@ function sleep(ms) {
 // В начале файла добавляем переменную для текущего бота
 let currentBot = null;
 
+// Добавляем новые константы для путей
+const CAPTCHA_ARCHIVE_DIR = './captcha_archive';
+const CAPTCHA_ANSWERS_DIR = path.join(CAPTCHA_ARCHIVE_DIR, 'answers');
+
+// Добавляем функцию для создания необходимых директорий
+function ensureCaptchaDirectories() {
+    if (!fs.existsSync(CAPTCHA_ARCHIVE_DIR)) {
+        fs.mkdirSync(CAPTCHA_ARCHIVE_DIR, { recursive: true });
+    }
+    if (!fs.existsSync(CAPTCHA_ANSWERS_DIR)) {
+        fs.mkdirSync(CAPTCHA_ANSWERS_DIR, { recursive: true });
+    }
+}
+
+// В начале файла добавляем переменные
+let lastCaptchaBase64 = ''; // Для хранения изображения капчи
+let lastCaptchaAnswer = '';
+let lastCaptchaFileName = '';
+
+// Добавляем глобальный обработчик сообщений
+process.on('message', (message) => {
+    if (message.type === 'chat-message' && currentBot) {
+        currentBot.chat(message.message);
+        process.send({ 
+            type: 'log', 
+            data: { 
+                message: `[${currentBot.username}] отправлено: ${message.message}`, 
+                type: 'info' 
+            } 
+        });
+    } else if (message.type === 'captcha-answer' && currentBot) {
+        lastCaptchaAnswer = message.answer;
+        currentBot.chat(message.answer);
+        
+        process.send({ 
+            type: 'log', 
+            data: { 
+                message: `Получен ответ на капчу: ${message.answer}`, 
+                type: 'info' 
+            } 
+        });
+    }
+});
+
 // Функция для создания торгового бота
 async function createTradingBot(index) {
+    ensureCaptchaDirectories(); // Добавляем создание директорий
     const botName = config.botNicknames[index];
 
     const tradingBot = mineflayer.createBot({
@@ -80,7 +125,7 @@ async function createTradingBot(index) {
     async function combineMaps() {
         try {
             const mapOrder = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
-
+            
             const finalImage = await sharp({
                 create: {
                     width: 128 * 4,
@@ -114,11 +159,18 @@ async function createTradingBot(index) {
                 .composite(compositeOperations)
                 .toFile('./captcha_maps/combined_captcha.png');
 
-            const base64Image = fs.readFileSync('./captcha_maps/combined_captcha.png', 'base64');
+            // Сохраняем base64 изображения в переменную
+            lastCaptchaBase64 = fs.readFileSync('./captcha_maps/combined_captcha.png', 'base64');
+            
+            // Генерируем имя файла
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            lastCaptchaFileName = `captcha_${timestamp}`;
+
+            // Отправляем изображение в GUI
             process.send({ 
                 type: 'captcha-image', 
                 data: { 
-                    image: base64Image,
+                    image: lastCaptchaBase64,
                     message: 'Получена капча',
                     type: 'info'
                 } 
@@ -142,7 +194,7 @@ async function createTradingBot(index) {
         }
     }, 1000);
 
-    tradingBot.once('spawn', () => {
+    tradingBot.once('login', () => {
         process.send({ 
             type: 'log', 
             data: { 
@@ -196,13 +248,54 @@ async function createTradingBot(index) {
     });
 
     tradingBot.on('message', (message) => {
+        const messageText = message.toString();
         process.send({ 
             type: 'log', 
             data: { 
-                message: `[${botName}] ${message.toString()}`, 
+                message: `[${botName}] ${messageText}`, 
                 type: 'info' 
             } 
         });
+
+        // Проверяем успешное прохождение капчи
+        if (messageText.includes('▶ Проверка пройдена. Приятной игры!')) {
+            try {
+                if (lastCaptchaFileName && lastCaptchaAnswer && lastCaptchaBase64) {
+                    // Убедимся, что директории существуют
+                    ensureCaptchaDirectories();
+
+                    // Сначала сохраняем ответ в файл
+                    const answerPath = path.join(CAPTCHA_ANSWERS_DIR, lastCaptchaFileName + '.txt');
+                    fs.writeFileSync(answerPath, lastCaptchaAnswer);
+
+                    // Затем сохраняем изображение капчи
+                    const captchaPath = path.join(CAPTCHA_ARCHIVE_DIR, lastCaptchaFileName + '.png');
+                    const imageBuffer = Buffer.from(lastCaptchaBase64, 'base64');
+                    fs.writeFileSync(captchaPath, imageBuffer);
+                    
+                    process.send({ 
+                        type: 'log', 
+                        data: { 
+                            message: `Сохранена капча и ответ: ${lastCaptchaFileName}`, 
+                            type: 'success' 
+                        } 
+                    });
+
+                    // Очищаем переменные
+                    lastCaptchaBase64 = '';
+                    lastCaptchaAnswer = '';
+                    lastCaptchaFileName = '';
+                }
+            } catch (err) {
+                process.send({ 
+                    type: 'log', 
+                    data: { 
+                        message: `Ошибка сохранения капчи: ${err.message}`, 
+                        type: 'error' 
+                    } 
+                });
+            }
+        }
     });
 
     tradingBot.on('error', (err) => {
