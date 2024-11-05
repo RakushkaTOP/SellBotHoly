@@ -53,7 +53,15 @@ const terminal = {
         msgElement.className = `terminal-message log-${type}`;
         msgElement.innerHTML = `<span class="timestamp">[${timestamp}]</span> ${message}`;
         this.output.appendChild(msgElement);
-        this.output.parentElement.scrollTop = this.output.parentElement.scrollHeight;
+        
+        requestAnimationFrame(() => {
+            this.output.scrollTop = this.output.scrollHeight;
+            
+            const terminalContainer = this.output.closest('.terminal');
+            if (terminalContainer) {
+                terminalContainer.scrollTop = terminalContainer.scrollHeight;
+            }
+        });
     },
 
     clear() {
@@ -78,6 +86,14 @@ const terminal = {
         `;
         
         this.output.appendChild(msgElement);
+        
+        requestAnimationFrame(() => {
+            this.output.scrollTop = this.output.scrollHeight;
+            const terminalContainer = this.output.closest('.terminal');
+            if (terminalContainer) {
+                terminalContainer.scrollTop = terminalContainer.scrollHeight;
+            }
+        });
         
         const captchaInput = msgElement.querySelector('.captcha-input');
         const submitButton = msgElement.querySelector('.captcha-submit');
@@ -107,7 +123,13 @@ const terminal = {
         
         captchaInput.focus();
         
-        this.output.parentElement.scrollTop = this.output.parentElement.scrollHeight;
+        requestAnimationFrame(() => {
+            this.output.scrollTop = this.output.scrollHeight;
+            const terminalContainer = this.output.closest('.terminal');
+            if (terminalContainer) {
+                terminalContainer.scrollTop = terminalContainer.scrollHeight;
+            }
+        });
     }
 };
 
@@ -487,24 +509,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const configSection = document.createElement('div');
-    configSection.className = 'config-section';
-    configSection.innerHTML = `
-        <div class="config-controls">
-            <button id="reloadConfig" class="btn btn-secondary">
-                <i class="material-icons">refresh</i>
-                <span>Обновить конфиг</span>
-            </button>
-            <button id="exportConfig" class="btn btn-secondary">
-                <i class="material-icons">download</i>
-                <span>Экспорт</span>
-            </button>
-            <button id="importConfig" class="btn btn-secondary">
-                <i class="material-icons">upload</i>
-                <span>Импорт</span>
-            </button>
-            <input type="file" id="configFileInput" style="display: none" accept=".json">
-        </div>
-    `;
 
     const header = document.querySelector('.header');
     if (header && header.nextSibling) {
@@ -513,14 +517,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const style = document.createElement('style');
     style.textContent = `
-        .config-section {
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
         .config-controls {
             display: flex;
             gap: 10px;
@@ -569,20 +565,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('importConfig')?.addEventListener('click', () => {
-        document.getElementById('configFileInput')?.click();
+        const fileInput = document.getElementById('configFileInput');
+        if (fileInput) {
+            fileInput.click();
+        }
     });
 
     document.getElementById('configFileInput')?.addEventListener('change', async (event) => {
-        const file = event.target.files?.[0];
+        const fileInput = event.target;
+        const file = fileInput.files?.[0];
+        
         if (file) {
             try {
                 const content = await file.text();
                 const config = JSON.parse(content);
-                await configManager.save(config);
-                configManager.load();
+                
+                // Отправляем конфиг на сервер
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+
+                if (response.ok) {
+                    terminal.log('Конфигурация успешно импортирована', 'success');
+                    configManager.load(); // Перезагружаем конфиг
+                } else {
+                    throw new Error('Ошибка при сохранении конфигурации');
+                }
             } catch (error) {
-                terminal.log('Ошибка импорта конфигурации', 'error');
+                terminal.log('Ошибка при импорте конфигурации: ' + error.message, 'error');
             }
+            
+            // Очищаем input для возможности повторного импорта того же файла
+            fileInput.value = '';
         }
     });
 
@@ -611,5 +629,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('stopBot')?.addEventListener('click', () => {
         electronAPI.stopBot();
+    });
+
+    // Добавляем обработчики для модального окна
+    const modal = document.getElementById('settingsModal');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const closeModal = document.querySelector('.close-modal');
+
+    settingsBtn.addEventListener('click', () => {
+        modal.classList.add('show');
+    });
+
+    closeModal.addEventListener('click', () => {
+        modal.classList.remove('show');
+    });
+
+    // Закрытие по клику вне модального окна
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            modal.classList.remove('show');
+        }
     });
 }); 

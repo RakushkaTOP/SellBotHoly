@@ -5,6 +5,7 @@
     <title>Minecraft Bot Manager</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         #loading-screen {
             position: fixed;
@@ -99,13 +100,47 @@
                 </div>
                 <div class="controls">
                     <button id="startBot" class="btn btn-success">
-                        <i class="material-icons">play_arrow</i>
-                        <span>Старт</span>
+                        <i class="material-icons">play_circle</i>
+                        <span>СТАРТ</span>
                     </button>
                     <button id="stopBot" class="btn btn-danger">
-                        <i class="material-icons">stop</i>
-                        <span>Стоп</span>
+                        <i class="material-icons">stop_circle</i>
+                        <span>СТОП</span>
                     </button>
+                    <button id="settingsBtn" class="btn btn-settings">
+                        <i class="material-icons">settings</i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Добавляем скрытый input для импорта -->
+            <input type="file" id="configFileInput" accept=".json" style="display: none;">
+
+            <!-- Добавляем модальное окно настроек -->
+            <div id="settingsModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Настройки</h2>
+                        <button class="close-modal">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="settings-buttons">
+                            <button id="reloadConfig" class="btn btn-secondary">
+                                <i class="material-icons">refresh</i>
+                                <span>Обновить конфиг</span>
+                            </button>
+                            <button id="exportConfig" class="btn btn-secondary">
+                                <i class="material-icons">download</i>
+                                <span>Экспорт</span>
+                            </button>
+                            <button id="importConfig" class="btn btn-secondary">
+                                <i class="material-icons">upload</i>
+                                <span>Импорт</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

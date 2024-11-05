@@ -5,42 +5,39 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #141E30 0%, #243B55 100%);
-    color: #1a1a1a;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #1a1f25 0%, #2c3e50 100%);
+    color: #e1e5ea;
     line-height: 1.6;
     min-height: 100vh;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 15px;
+    padding: 20px;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.title-section {
-    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 24px;
 }
 
 .title-section h1 {
-    font-size: 24px;
-    margin-bottom: 5px;
+    font-size: 28px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
 }
 
 .subtitle {
-    font-size: 12px;
-    opacity: 0.8;
+    color: #94a3b8;
+    font-size: 14px;
 }
 
 .controls {
@@ -49,35 +46,65 @@ body {
 }
 
 .btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
+    font-size: 14px;
     cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    font-size: 13px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
 }
 
-.btn i {
-    font-size: 18px;
+.btn:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .btn-success {
-    background-color: #2ecc71;
-    color: white;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2);
+    padding: 12px 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-success span, .btn-danger span {
+    font-size: 15px;
+}
+
+.btn-success .material-icons, .btn-danger .material-icons {
+    font-size: 24px;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
 }
 
 .btn-danger {
-    background-color: #e74c3c;
-    color: white;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+    padding: 12px 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
 }
 
 .btn-add {
-    background-color: #3498db;
-    color: white;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
 }
 
 .tables-container {
@@ -88,25 +115,24 @@ body {
 }
 
 .table-section {
-    background-color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 24px;
 }
 
 .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #f0f2f5;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .section-header h2 {
-    font-size: 18px;
-    color: #2c3e50;
+    font-size: 20px;
+    font-weight: 600;
+    color: #e1e5ea;
 }
 
 .table-wrapper {
@@ -117,27 +143,38 @@ body {
 
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0 8px;
 }
 
 th {
-    background-color: #f8f9fa;
-    color: #2c3e50;
-    font-weight: 600;
+    background: transparent;
+    color: #94a3b8;
+    font-weight: 500;
     text-align: left;
-    padding: 8px 12px;
-    font-size: 13px;
+    padding: 12px 16px;
+    font-size: 14px;
 }
 
 td {
-    padding: 8px 12px;
-    border-bottom: 1px solid #eee;
-    font-size: 13px;
-    vertical-align: middle;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 16px;
+    color: #e1e5ea;
+    font-size: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-tr:hover {
-    background-color: rgba(52, 152, 219, 0.05);
+tr td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+tr td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .btn-small {
@@ -283,11 +320,11 @@ tr {
 /* Стили для терминала */
 .terminal-section {
     margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .terminal-header {
@@ -296,20 +333,22 @@ tr {
     align-items: center;
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #f0f2f5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .terminal-header h2 {
     font-size: 20px;
-    color: #2c3e50;
+    color: #e1e5ea;
 }
 
 .terminal {
-    background-color: #1e1e1e;
-    border-radius: 8px;
-    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 20px;
     height: 450px;
-    overflow-y: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 #terminalOutput {
@@ -346,38 +385,39 @@ tr {
 
 /* Стили для разных типов сообщений */
 .log-info {
-    color: #4fc3f7;
+    color: #60a5fa;
 }
 
 .log-success {
-    color: #4caf50;
+    color: #22c55e;
 }
 
 .log-error {
-    color: #ff5252;
+    color: #ef4444;
 }
 
 .log-warning {
-    color: #ffd740;
+    color: #fbbf24;
 }
 
 /* Стилизация скроллбара терминала */
 .terminal::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 .terminal::-webkit-scrollbar-track {
-    background: #2d2d2d;
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 4px;
 }
 
 .terminal::-webkit-scrollbar-thumb {
-    background: #666;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
 }
 
 .terminal::-webkit-scrollbar-thumb:hover {
-    background: #888;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Анимация для новых сообщений */
@@ -389,7 +429,8 @@ tr {
 .terminal-message {
     animation: fadeIn 0.2s ease;
     margin: 2px 0;
-    padding: 2px 0;
+    padding: 4px 0;
+    opacity: 0.9;
 }
 
 /* Стиль для временных меток */
@@ -419,11 +460,11 @@ tr {
 
 .receiver-section {
     margin-bottom: 20px;
-    background-color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 15px;
     border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .receiver-container {
@@ -433,20 +474,28 @@ tr {
 }
 
 .receiver-container label {
-    font-weight: 600;
-    color: #2c3e50;
+    font-weight: 500;
+    color: #e1e5ea;
 }
 
 .receiver-container input {
     padding: 8px 12px;
-    border: 2px solid #3498db;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     font-size: 14px;
     width: 200px;
+    color: #e1e5ea;
+}
+
+.receiver-container input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .receiver-note {
-    color: #7f8c8d;
+    color: #94a3b8;
     font-size: 12px;
     font-style: italic;
 }
@@ -509,11 +558,11 @@ tr {
 /* Стили для секции ввода команд */
 .command-section {
     margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .command-header {
@@ -522,35 +571,31 @@ tr {
     align-items: center;
     margin-bottom: 15px;
     padding-bottom: 15px;
-    border-bottom: 2px solid #f0f2f5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .command-header h2 {
     font-size: 20px;
-    color: #2c3e50;
+    color: #e1e5ea;
     margin: 0;
 }
 
 .command-input {
     width: 100%;
-    background-color: #1e1e1e;
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    padding: 12px 15px;
-    font-family: 'Consolas', 'Monaco', monospace;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #e1e5ea;
+    padding: 12px 16px;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.command-input::placeholder {
-    color: #666;
+    transition: all 0.2s ease;
 }
 
 .command-input:focus {
-    background-color: #2d2d2d;
-    box-shadow: 0 0 0 2px #4fc3f7;
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(0, 0, 0, 0.3);
 }
 
 /* Удаляем старые стили для terminal-input */
@@ -610,4 +655,539 @@ tr {
 
 .terminal-header .btn-action span {
     font-size: 14px;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e1e5ea;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Добавляем стили для кнопки настроек */
+.btn-settings {
+    background: rgba(255, 255, 255, 0.1);
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-settings:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(30deg);
+}
+
+.btn-settings .material-icons {
+    font-size: 24px;
+    color: #e1e5ea;
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: #e1e5ea;
+    margin: 0;
+    font-size: 20px;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: #e1e5ea;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.close-modal:hover {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.settings-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Исправляем проблему с терминалом */
+.terminal {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#terminalOutput {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/* Обновляем стили для скроллбара терминала */
+#terminalOutput::-webkit-scrollbar {
+    width: 8px;
+}
+
+#terminalOutput::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#terminalOutput::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+#terminalOutput::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Анимация для новых сообщений */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.terminal-message {
+    animation: fadeIn 0.2s ease;
+    margin: 2px 0;
+    padding: 4px 0;
+    opacity: 0.9;
+}
+
+/* Стиль для временных меток */
+.timestamp {
+    color: #666;
+    margin-right: 8px;
+}
+
+/* Стилизация скроллбара для таблиц */
+.table-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.receiver-section {
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.receiver-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.receiver-container label {
+    font-weight: 500;
+    color: #e1e5ea;
+}
+
+.receiver-container input {
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    font-size: 14px;
+    width: 200px;
+    color: #e1e5ea;
+}
+
+.receiver-container input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.receiver-note {
+    color: #94a3b8;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.captcha-container {
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.captcha-message {
+    color: #4fc3f7;
+    margin-bottom: 8px;
+}
+
+.captcha-image {
+    max-width: 512px;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 8px;
+    display: block;
+}
+
+/* Добавляем стили для поля ввода */
+.terminal-input-container {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #444;
+}
+
+.terminal-input {
+    width: 100%;
+    background-color: #2d2d2d;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    padding: 8px 12px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    outline: none;
+}
+
+.terminal-input::placeholder {
+    color: #666;
+}
+
+.terminal-input:focus {
+    background-color: #333;
+    box-shadow: 0 0 0 1px #4fc3f7;
+}
+
+/* Обновляем высоту терминала для чета поля ввода */
+.terminal {
+    height: 450px;
+}
+
+/* Стили для секции ввода команд */
+.command-section {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.command-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.command-header h2 {
+    font-size: 20px;
+    color: #e1e5ea;
+    margin: 0;
+}
+
+.command-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #e1e5ea;
+    padding: 12px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.command-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Удаляем старые стили для terminal-input */
+.terminal-input-container,
+.terminal-input {
+    display: none;
+}
+
+/* Обновляем высоту терминала */
+.terminal {
+    height: 400px;
+}
+
+/* Обновляем стили для контейнера ввода команд */
+.command-input-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.command-input {
+    flex: 1;
+    background-color: #1e1e1e;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    padding: 12px 15px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.btn-send {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-send:hover {
+    background-color: #2980b9;
+}
+
+/* Обновляем стили для кнопки очистки терминала */
+.terminal-header .btn-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    width: auto;
+    height: auto;
+}
+
+.terminal-header .btn-action span {
+    font-size: 14px;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #e1e5ea;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Добавляем стили для кнопки настроек */
+.btn-settings {
+    background: rgba(255, 255, 255, 0.1);
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-settings:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(30deg);
+}
+
+.btn-settings .material-icons {
+    font-size: 24px;
+    color: #e1e5ea;
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: #e1e5ea;
+    margin: 0;
+    font-size: 20px;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: #e1e5ea;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.close-modal:hover {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.settings-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Исправляем проблему с терминалом */
+.terminal {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#terminalOutput {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/* Обновляем стили для скроллбара терминала */
+#terminalOutput::-webkit-scrollbar {
+    width: 8px;
+}
+
+#terminalOutput::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#terminalOutput::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+#terminalOutput::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Обновляем стили для кнопок в модальном окне */
+.settings-buttons .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.settings-buttons .btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.settings-buttons .btn .material-icons {
+    font-size: 20px;
 }
